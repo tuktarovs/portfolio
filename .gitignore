@@ -1,0 +1,38 @@
+# Игнорировать виртуальные окружения
+venv/
+env/
+.venv/
+.env/
+
+# Папки с данными и результатами
+data/
+results/
+output/
+reports/
+
+# Логи
+*.log
+
+# Кэшированные файлы
+__pycache__/
+*.pyc
+*.pyo
+
+# Файлы конфигурации
+config.json
+*.ini
+
+# Неподаваемые файлы Jupyter Notebook
+.ipynb_checkpoints/
+
+# Модули и временные файлы
+*.tmp
+*.temp
+
+# Модели машинного обучения
+*.pkl
+*.h5
+
+# Игнорировать системные файлы
+*.DS_Store
+*.Thumbs.db
