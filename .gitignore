@@ -4,7 +4,9 @@ env/
 .venv/
 .env/
 
+.idea/
 # Папки с данными и результатами
+Data/
 data/
 results/
 output/
@@ -36,3 +38,4 @@ config.json
 # Игнорировать системные файлы
 *.DS_Store
 *.Thumbs.db
+
