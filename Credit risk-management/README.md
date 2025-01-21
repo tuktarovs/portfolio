@@ -1,15 +1,20 @@
 #Credit Risk Management
+
 **Predicting Borrower Default on Loans**
+
 **Project Goal**
+
 Develop a machine learning model to predict the probability of borrower default.
 
 **Key Metrics**
+
 **ROC AUC ≥ 0.75** (achieved **0.77**).
 
 **Dataset**
 -Size: 26.1 million records.
 -Features: 61 (20 binary, 30 categorical).
 -Class imbalance: Defaulted borrowers make up 3.5% of the dataset.
+
 **Project Stages**
 1. Data Analysis
 Merging and preprocessing datasets.
@@ -27,11 +32,13 @@ Cross-validation for final model selection.
 The model was packaged into a Pipeline and saved using dill.
 
 **Libraries Used**
+
 Pandas, Scikit-learn, Matplotlib, Seaborn, Dill
 LightGBM (gradient boosting)
 Bayesian Optimization (bayes_opt)
 
 **Results**
+
 Achieved ROC AUC 0.77 (above the target threshold of 0.75).
 Developed a reusable Pipeline for model deployment.
 Detailed model analysis is available in the Jupyter Notebook.
