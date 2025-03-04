@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  parser:
+    build: ./parsing
+    volumes:
+      - ./data/raw:/app/data/raw
+    restart: "no"
+
+  trainer:
+    build: ./models
+    volumes:
+      - ./data/raw:/app/data/raw
+      - ./models:/app/models
+    restart: "no"
+    depends_on:
+      - parser
+
+  api:
+    build: ./api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+    restart: "always"

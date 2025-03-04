@@ -1,0 +1,7 @@
+pandas==2.2.3
+lightgbm==4.6.0
+scikit-learn==1.6.1
+feature-engine==1.8.3
+joblib==1.4.2
+optuna==4.2.1
+catboost==1.2.7
