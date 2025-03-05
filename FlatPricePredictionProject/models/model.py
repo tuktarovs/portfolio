@@ -110,10 +110,12 @@ def train_model():
             'mse': mape}
     }
 
-    model_dir = os.path.join('.', 'pipe')
-    if not os.path.exists(model_dir):
-        os.makedirs(model_dir)
+    model_dir = '/app/models/pipe'
     current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
     dump(pipe, os.path.join(model_dir, f'model_{current_time}.joblib'))
 
     print("Модель и метаданные успешно сохранены.")
+
+
+if __name__ == '__main__':
+    train_model()

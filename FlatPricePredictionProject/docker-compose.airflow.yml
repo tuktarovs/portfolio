@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  airflow-init:
+    image: apache/airflow:2.10.5
+    entrypoint: ["airflow", "db", "upgrade"]
+    restart: "no"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13
+    container_name: airflow-postgres
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  airflow-webserver:
+    build: ./airflow
+    container_name: airflow-webserver
+    restart: always
+    depends_on:
+      - airflow-init
+    ports:
+      - "8080:8080"
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+    privileged: true
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/raw:/app/data/raw
+      - ./models:/app/models
+    user: root
+
+  airflow_scheduler:
+    build: ./airflow
+    container_name: airflow-scheduler
+    restart: always
+    depends_on:
+      - airflow-webserver
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+    privileged: true
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow_plugins:/opt/airflow/plugins
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/raw:/app/data/raw
+      - ./models:/app/models
+
+  parser:
+    build: ./parsing
+    volumes:
+      - ./data/raw:/app/data/raw
+    restart: 'no'
+    command: sleep infinity
+
+  trainer:
+    build: ./models
+    volumes:
+      - ./data/raw:/app/data/raw
+      - ./models:/app/models
+    restart: 'no'
+    depends_on:
+      - parser
+    command: sleep infinity
+
+volumes:
+  airflow_dags:
+  airflow_logs:
+  airflow_plugins:
+  postgres_data:

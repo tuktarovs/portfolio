@@ -116,6 +116,9 @@ def parse_data():
         time.sleep(20)
     df = pd.DataFrame(offers)
     current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
-    file_path = os.path.join('..', 'data', 'raw', f'offers_{current_time}.csv')
+    file_path = os.path.join('/app/data/raw', f'offers_{current_time}.csv')
     df.to_csv(file_path, index=False)
     print(f'Данные сохранены в {file_path}')
+
+if __name__ == '__main__':
+    parse_data()
