@@ -80,7 +80,11 @@ def get_offers(offers, data):
         offer['rooms_count'] = item['roomsCount']
         offer['total_area'] = item['totalArea']
         offer['kitchen_area'] = item['kitchenArea']
-        offer['year'] = item['building']['buildYear']
+        try:
+            offer['year'] = item['building']['buildYear']
+        except:
+            offer['year'] = None
+
         try:
             offer['parking'] = item['building']['parking']['type']
         except:

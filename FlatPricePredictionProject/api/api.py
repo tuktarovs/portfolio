@@ -5,8 +5,7 @@ from joblib import load
 import os
 from datetime import datetime
 import numpy as np
-from models.preprocessing import missings, new_features
-
+from preprocessing import missings, new_features
 
 app = FastAPI()
 

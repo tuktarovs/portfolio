@@ -3,6 +3,7 @@ from airflow.providers.docker.operators.docker import DockerOperator
 from airflow.operators.bash import BashOperator
 from datetime import datetime
 from airflow.utils.dates import days_ago
+from docker.types import Mount
 
 
 default_args = {
@@ -32,7 +33,8 @@ with DAG(
         auto_remove='success',
         command=None,
         docker_url='unix://var/run/docker.sock',
-        network_mode='bridge'
+        network_mode='bridge',
+        mounts=[Mount(source='/Users/macbook/Desktop/Projects/FlatPricePredictionProject/data/raw', target='/app/data/raw', type='bind')]
     )
 
     trainer_task = DockerOperator(
@@ -43,7 +45,10 @@ with DAG(
         auto_remove='success',
         command=None,
         docker_url='unix://var/run/docker.sock',
-        network_mode='bridge'
+        network_mode='bridge',
+        mounts=[
+            Mount(source='/Users/macbook/Desktop/Projects/FlatPricePredictionProject/data/raw', target='/app/data/raw', type='bind'),
+            Mount(source='/Users/macbook/Desktop/Projects/FlatPricePredictionProject/models', target='/app/models', type='bind')]
     )
 
     start_message_task >> parser_task >> trainer_task

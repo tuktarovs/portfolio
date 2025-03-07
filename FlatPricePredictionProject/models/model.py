@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error
 from sklearn.model_selection import train_test_split, KFold, cross_val_score
 from datetime import datetime
-from models.preprocessing import missings, new_features
+from preprocessing import missings, new_features
 from feature_engine.transformation import YeoJohnsonTransformer
 from feature_engine.outliers import Winsorizer
 from feature_engine.selection import DropFeatures
@@ -14,6 +14,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer
 import optuna
 from catboost import CatBoostRegressor
+
 
 
 def get_latest_file(directory):
@@ -59,7 +60,7 @@ def hyperparameters(X_train,y_train):
         return np.mean(mape_scores)
 
     study = optuna.create_study(direction='minimize')
-    study.optimize(objective, n_trials=50)
+    study.optimize(objective, n_trials=30)
     return study.best_params
 
 def train_model():

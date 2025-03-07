@@ -30,6 +30,7 @@ services:
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__WEBSERVER__SECRET_KEY=super_secret_key
     privileged: true
     volumes:
       - ./airflow/dags:/opt/airflow/dags
@@ -39,6 +40,7 @@ services:
     user: root
 
   airflow_scheduler:
+    user: root
     build: ./airflow
     container_name: airflow-scheduler
     restart: always
@@ -47,16 +49,16 @@ services:
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__WEBSERVER__SECRET_KEY=super_secret_key
     privileged: true
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
       - ./airflow_plugins:/opt/airflow/plugins
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./data/raw:/app/data/raw
-      - ./models:/app/models
 
   parser:
+    user: root
     build: ./parsing
     volumes:
       - ./data/raw:/app/data/raw
@@ -64,6 +66,7 @@ services:
     command: sleep infinity
 
   trainer:
+    user: root
     build: ./models
     volumes:
       - ./data/raw:/app/data/raw

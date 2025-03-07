@@ -33,6 +33,7 @@ config.json
 *.temp
 
 # Модели машинного обучения
+*.joblib
 *.pickle
 *.pkl
 *.h5
