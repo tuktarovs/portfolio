@@ -37,6 +37,7 @@ config.json
 *.pickle
 *.pkl
 *.h5
+*.npy
 
 # Игнорировать системные файлы
 *.DS_Store
